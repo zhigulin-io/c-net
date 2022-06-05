@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{> elements/meta }}
+    <title>Health Check</title>
+</head>
+<body>
+
+<header>
+    {{> elements/header }}
+</header>
+
+<h3>Всё ОК!</h3>
+
+<main>
+    {{#status}}
+        <p>id: {{id}}</p>
+        <p>status: {{status}}</p>
+    {{/status}}
+</main>
+
+<footer>
+    {{> elements/footer }}
+</footer>
+
+</body>
+</html>

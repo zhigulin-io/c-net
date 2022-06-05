@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Создание адреса</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>addresses/nav}}</nav>
+
+<main>
+    {{#address}}
+        <form action="/addresses/update" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th>Вид значения</th>
+                    <th>ID</th>
+                    <th>Адрес</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Текущее значение</td>
+                    <td>{{id}}</td>
+                    <td>{{address}}</td>
+                </tr>
+                <tr>
+                    <td>Новое значение</td>
+                    <td><input type="hidden" name="id" value="{{id}}">{{id}}</td>
+                    <td><input type="text" name="address"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit">Сохранить</button></td>
+                    <td><button type="reset">Сбросить</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    {{/address}}
+
+    {{^address}}
+        <p>
+            Не указан какой-нибудь адрес!
+        </p>
+    {{/address}}
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

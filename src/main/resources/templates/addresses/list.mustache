@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Список адерсов</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>addresses/nav}}</nav>
+
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Адрес</th>
+            <th>Редактировать</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {{#addresses}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{address}}</td>
+                <td><a href='/addresses/update?id={{id}}'>Редактировать</a></td>
+                <td><a href='/addresses/delete?id={{id}}'>Удалить</a></td>
+            </tr>
+        {{/addresses}}
+        </tbody>
+    </table>
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

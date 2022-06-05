@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Редактор цели</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>goal/nav}}</nav>
+
+<main>
+    <form action="/goals/create" method="post">
+        <p>
+            <label for="goal">Цель:</label>
+            <input type="text" name="goal" id="goal">
+        </p>
+        <p>
+            <label for="scoreCap">Необходимо очков:</label>
+            <input type="number" min="1" id="scoreCap" name="scoreCap">
+        </p>
+        <p>
+            <button type="submit">Создать</button>
+        </p>
+    </form>
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

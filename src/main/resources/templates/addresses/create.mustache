@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Создание адреса</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>addresses/nav}}</nav>
+
+<main>
+    <form action="/addresses/create" method="post">
+        <p>
+            <label for="address">Адрес:</label><br>
+            <input type="text" name="address" required min="1" max="30">
+        </p>
+        <p>
+            <button type="submit">Создать</button>
+        </p>
+    </form>
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

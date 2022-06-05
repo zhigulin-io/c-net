@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Транзакция</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>goal/nav}}</nav>
+
+<main>
+    <form action="/goals/transaction" method="post">
+        <p>
+            <label for="source">Цель-источник:</label>
+            <select name="sourceId" id="source">
+                {{#goals}}
+                    <option value="{{id}}">{{goal}}({{currentScore}}/{{scoreCap}})</option>
+                {{/goals}}
+            </select>
+        </p>
+        <p>
+            <label for="destination">Цель-приемник:</label>
+            <select name="destinationId" id="destination">
+                {{#goals}}
+                    {{^status}}
+                        <option value="{{id}}">{{goal}}({{currentScore}}/{{scoreCap}})</option>
+                    {{/status}}
+                {{/goals}}
+            </select>
+        </p>
+        <p>
+            <label for="amount">Количество:</label>
+            <input type="number" min="1">
+        </p>
+        <p>
+            <button type="submit">Перевести</button>
+        </p>
+    </form>
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

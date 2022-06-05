@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Редактор цели</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>goal/nav}}</nav>
+
+<main>
+    {{#goal}}
+        <form action="/goals/update" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th>Вид значений</th>
+                    <th>ID</th>
+                    <th>Цель</th>
+                    <th>Необходимо очков</th>
+                    <th>Очков сейчас</th>
+                    <th>Достигнута</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Действующие значения</td>
+                    <td>{{id}}</td>
+                    <td>{{goal}}</td>
+                    <td>{{scoreCap}}</td>
+                    <td>{{currentScore}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                <tr>
+                    <td>Новые значения</td>
+                    <td><input type="hidden" name="id" value="{{id}}" />{{id}}</td>
+                    <td><input type="text" name="goal" value="{{goal}}"/></td>
+                    <td><input type="number" name="scoreCap" value="{{scoreCap}}"/></td>
+                    <td>{{currentScore}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <td colspan="3"><button type="submit">Сохранить</button></td>
+                    <td colspan="3"><button type="reset">Сбросить</button></td>
+                </tr>
+                </tfoot>
+            </table>
+        </form>
+    {{/goal}}
+    {{^goal}}
+        <p>Не выбрана ни одна цель!</p>
+    {{/goal}}
+
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{> elements/meta }}
+    <title>Меню</title>
+</head>
+<body>
+<header>{{> elements/header}}</header>
+
+<main>
+    <div class="menuButton">
+        <a href="/goals">Цели</a>
+    </div>
+
+    <div class="menuButton">
+        <a href="/addresses">Адреса</a>
+    </div>
+
+    <div class="menuButton">
+        <a href="#">Задачи</a>
+    </div>
+
+    {{# schedule }}
+        <div class="menuButton">
+            <a href="#">Расписание</a>
+        </div>
+    {{/schedule}}
+
+
+    {{# checkList }}
+        <div class="menuButton">
+            <a href="#">Чек-Лист</a>
+        </div>
+    {{/checkList }}
+</main>
+
+
+<footer>{{> elements/footer }}</footer>
+</body>
+</html>

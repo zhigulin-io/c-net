@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{> elements/meta }}
+    <title>Список целей</title>
+</head>
+<body>
+<header>{{> elements/header }}</header>
+<nav>{{>goal/nav}}</nav>
+
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Цель</th>
+            <th>Необходимо очков</th>
+            <th>Очков сейчас</th>
+            <th>Достигнута</th>
+            <th>Редактировать</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {{# goals }}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{goal}}</td>
+                <td>{{scoreCap}}</td>
+                <td>{{currentScore}}</td>
+                <td>{{status}}</td>
+                <td><a href='/goals/update?id={{id}}'>Редактировать</a></td>
+                <td><a href='/goals/delete?id={{id}}'>Удалить</a></td>
+            </tr>
+        {{/ goals }}
+        </tbody>
+    </table>
+</main>
+
+<footer>{{> elements/footer }}</footer>
+</body>
+</html>
