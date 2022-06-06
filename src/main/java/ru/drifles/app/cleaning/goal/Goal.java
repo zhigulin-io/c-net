@@ -3,11 +3,12 @@ package ru.drifles.app.cleaning.goal;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "goal", schema = "public")
+@Table(name = "goals", schema = "public")
 public class Goal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "goal", nullable = false, length = 30)

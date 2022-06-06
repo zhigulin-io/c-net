@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Список задач</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>nav}}</nav>
+
+<main>
+    {{#room}}
+        {{#address}}
+            <p>{{address}}</p>
+        {{/address}}
+
+        <p>{{room}}</p>
+
+        <form action="/tasks/create" method="get">
+            <button type="submit" name="roomId" value="{{id}}">Добавить задачу</button>
+        </form>
+
+        {{#tasks}}
+            <div style="margin: 1em;">
+                <ul>
+                    <li>Задача: {{taskName}}</li>
+                    <li>Период выполнения: {{period}}</li>
+                    <li>Время выполнения: {{duration}}</li>
+                    <li>Награда: {{score}}</li>
+                    <li>Приоритет: {{currentPriority}} ({{defaultPriority}})</li>
+                    <li>Дней назад выполнено: {{lastCompleted}}</li>
+                </ul>
+
+                <form action="/tasks/{{id}}/update" method="get">
+                    <button type="submit">Изменить</button>
+                </form>
+                <form action="/tasks/{{id}}/delete" method="post">
+                    <button type="submit" name="roomId" value="{{#room}}{{id}}{{/room}}">Удалить</button>
+                </form>
+            </div>
+        {{/tasks}}
+    {{/room}}
+
+    {{^room}}
+        <p>Нет детализации для данной комнаты!</p>
+    {{/room}}
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

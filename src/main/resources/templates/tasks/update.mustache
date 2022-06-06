@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Список комнат</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>nav}}</nav>
+
+<main>
+    {{#task}}
+        <form action="/tasks/{{id}}/update" method="post" name="task">
+            <table>
+                <thead>
+                <tr>
+                    <th>Вид значения</th>
+                    <th>Задача</th>
+                    <th>Период, дн.</th>
+                    <th>Продолжительность, мин.</th>
+                    <th>Количество очков</th>
+                    <th>Приоритет</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Текущее значение</td>
+                    <td>{{taskName}}</td>
+                    <td>{{period}}</td>
+                    <td>{{duration}}</td>
+                    <td>{{score}}</td>
+                    <td>{{defaultPriority}}</td>
+                </tr>
+                <tr>
+                    <td>Новое значение</td>
+                    <td><input type="text" name="taskName"></td>
+                    <td><input type="number" name="period"></td>
+                    <td><input type="number" name="duration"></td>
+                    <td><input type="number" name="score"></td>
+                    <td><input type="number" name="defaultPriority"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                    <td colspan="3">
+                        <button type="reset">Сбросить</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    {{/task}}
+
+    {{^task}}
+        <p>Необходимо передать задачу для редактирования</p>
+    {{/task}}
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

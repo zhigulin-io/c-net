@@ -6,30 +6,26 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>addresses/nav}}</nav>
+<nav>{{>nav}}</nav>
 
 <main>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Адрес</th>
-            <th>Редактировать</th>
-            <th>Удалить</th>
-        </tr>
-        </thead>
+    <form action="/addresses/create" method="get">
+        <button type="submit">Добавить адрес</button>
+    </form>
 
-        <tbody>
-        {{#addresses}}
-            <tr>
-                <td>{{id}}</td>
-                <td>{{address}}</td>
-                <td><a href='/addresses/update?id={{id}}'>Редактировать</a></td>
-                <td><a href='/addresses/delete?id={{id}}'>Удалить</a></td>
-            </tr>
-        {{/addresses}}
-        </tbody>
-    </table>
+    {{#addresses}}
+        <div style="margin: 1em;">
+            <form action="/addresses/{{id}}" method="get">
+                <button type="submit">{{address}}</button>
+            </form>
+            <form action="/addresses/{{id}}/update" method="get">
+                <button type="submit">Изменить</button>
+            </form>
+            <form action="/addresses/{{id}}/delete" method="post">
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+    {{/addresses}}
 </main>
 
 <footer>{{>elements/footer}}</footer>

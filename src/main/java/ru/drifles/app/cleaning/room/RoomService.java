@@ -2,6 +2,8 @@ package ru.drifles.app.cleaning.room;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.drifles.app.cleaning.address.Address;
 
 @Service
 public class RoomService {
@@ -13,23 +15,22 @@ public class RoomService {
     }
 
     public Room createRoom(String room, Long addressId) {
-        var entity = Room.builder()
-                .setRoom(room)
-                .setAddressId(addressId)
-                .build();
+        var address = new Address(null);
+        address.setId(addressId);
+
+        var entity = new Room(room);
+        entity.setAddress(address);
 
         return repository.save(entity);
     }
 
     public void deleteRoom(Long id) {
-        var entity = repository.findById(id).orElseThrow();
-        repository.delete(entity);
+        repository.deleteById(id);
     }
 
-    public Room updateRoom(Long id, String room, Long addressId) {
+    public Room updateRoom(Long id, String room) {
         var entity = repository.findById(id).orElseThrow();
         entity.setRoom(room);
-        entity.setAddressId(addressId);
         return repository.save(entity);
     }
 
@@ -37,7 +38,14 @@ public class RoomService {
         return repository.findById(id).orElseThrow();
     }
 
+    @Transactional
+    public Room getRoomWithTasks(Long id) {
+        var room = repository.findById(id).orElseThrow();
+        room.getTasks().size();
+        return room;
+    }
+
     public Iterable<Room> getAllRooms() {
-        return repository.findAll();
+        return null;
     }
 }

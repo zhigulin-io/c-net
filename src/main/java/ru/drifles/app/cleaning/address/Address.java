@@ -1,18 +1,40 @@
 package ru.drifles.app.cleaning.address;
 
+import ru.drifles.app.cleaning.room.Room;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "address", schema = "public")
+@Table(name = "addresses", schema = "public")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "address", nullable = false, unique = true, length = 30)
     private String address;
 
-    public Long id() {
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
+    private Set<Room> rooms;
+
+    public Address() {
+    }
+
+    public Address(String address) {
+        this.address = address;
+    }
+
+    public void addRoom(Room room) {
+        if (rooms == null)
+            rooms = new HashSet<>();
+        rooms.add(room);
+        room.setAddress(this);
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -20,7 +42,7 @@ public class Address {
         this.id = id;
     }
 
-    public String address() {
+    public String getAddress() {
         return address;
     }
 
@@ -28,31 +50,11 @@ public class Address {
         this.address = address;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public Set<Room> getRooms() {
+        return rooms;
     }
 
-    public static class Builder {
-        private Long id;
-        private String address;
-
-        private Builder() {}
-
-        public Builder setId(long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Address build() {
-            var address = new Address();
-            address.id = this.id;
-            address.address = this.address;
-            return address;
-        }
+    public void setRooms(Set<Room> rooms) {
+        this.rooms = rooms;
     }
 }

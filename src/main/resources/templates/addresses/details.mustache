@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Список адерсов</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>nav}}</nav>
+
+<main>
+    {{#address}}
+        <p>
+            {{address}}
+        </p>
+        <form action="/rooms/create" method="get">
+            <button type="submit" name="addressId" value="{{id}}">Добавить комнату</button>
+        </form>
+
+        {{#rooms}}
+            <div style="margin: 1em;">
+                <form action="/rooms/{{id}}" method="get">
+                    <button type="submit">{{room}}</button>
+                </form>
+                <form action="/rooms/{{id}}/update" method="get">
+                    <button type="submit">Изменить</button>
+                </form>
+                <form action="/rooms/{{id}}/delete" method="post">
+                    <button type="submit" name="addressId" value="{{#address}}{{id}}{{/address}}">Удалить</button>
+                </form>
+            </div>
+        {{/rooms}}
+    {{/address}}
+
+    {{^address}}
+        <p>Нет детализации для данного адреса!</p>
+    {{/address}}
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

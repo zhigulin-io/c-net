@@ -2,6 +2,8 @@ package ru.drifles.app.cleaning.address;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.drifles.app.cleaning.room.Room;
 
 @Service
 public class AddressService {
@@ -22,7 +24,7 @@ public class AddressService {
     }
 
     public Address createAddress(String address) {
-        return repository.save(Address.builder().setAddress(address).build());
+        return repository.save(new Address(address));
     }
 
     public Address updateAddress(Long id, String address) {
@@ -33,5 +35,12 @@ public class AddressService {
 
     public Address getAddressById(Long id) {
         return repository.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public Address getAddressWithRooms(Long id) {
+        var address = repository.findById(id).orElseThrow();
+        address.getRooms().size();
+        return address;
     }
 }

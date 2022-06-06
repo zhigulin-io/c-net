@@ -6,10 +6,44 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>rooms/nav}}</nav>
+<nav>{{>nav}}</nav>
 
 <main>
+    {{#room}}
+        <form action="/rooms/{{id}}/update" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th>Вид значения</th>
+                    <th>Комната</th>
+                </tr>
+                </thead>
 
+                <tbody>
+                <tr>
+                    <td>Текущее значение</td>
+                    <td>{{room}}</td>
+                </tr>
+                <tr>
+                    <td>Новое значение</td>
+                    <td><input type="text" name="room"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="id" value="{{id}}">Сохранить</button>
+                    </td>
+                    <td>
+                        <button type="reset">Сбросить</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    {{/room}}
+
+    {{^room}}
+        <p>Необходимо передать комнату для редактирования</p>
+    {{/room}}
 </main>
 
 <footer>{{>elements/footer}}</footer>

@@ -1,24 +1,45 @@
 package ru.drifles.app.cleaning.room;
 
+import ru.drifles.app.cleaning.address.Address;
+import ru.drifles.app.cleaning.task.Task;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "room", schema = "public")
+@Table(name = "rooms", schema = "public")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "room", nullable = false, unique = true, length = 30)
     private String room;
 
-    @Column(name = "address_id", nullable = false)
-    private Long addressId;
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
 
-    @Transient
-    private String address;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private Set<Task> tasks;
 
-    public Long id() {
+    public Room() {
+    }
+
+    public Room(String room) {
+        this.room = room;
+    }
+
+    public void addTask(Task task) {
+        if (tasks == null)
+            tasks = new HashSet<>();
+        tasks.add(task);
+        task.setRoom(this);
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -26,7 +47,7 @@ public class Room {
         this.id = id;
     }
 
-    public String room() {
+    public String getRoom() {
         return room;
     }
 
@@ -34,60 +55,19 @@ public class Room {
         this.room = room;
     }
 
-    public Long addressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
-    }
-
-    public String address() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
-    public static class Builder {
-        private Long id;
-        private String room;
-        private Long addressId;
-        private String address;
-
-        private Builder() {}
-
-        public Builder setId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setRoom(String room) {
-            this.room = room;
-            return this;
-        }
-
-        public Builder setAddressId(Long addressId) {
-            this.addressId = addressId;
-            return this;
-        }
-
-        public Builder setAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Room build() {
-            var entity = new Room();
-            entity.id = this.id;
-            entity.room = this.room;
-            entity.addressId = this.addressId;
-            return entity;
-        }
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }

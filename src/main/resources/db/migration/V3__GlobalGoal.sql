@@ -1,1 +1,0 @@
-insert into goal(goal, score_cap) values ('Общая копилка', 2000000000);

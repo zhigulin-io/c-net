@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{>elements/meta}}
+    <title>Список комнат</title>
+</head>
+<body>
+<header>{{>elements/header}}</header>
+<nav>{{>nav}}</nav>
+
+<main>
+    {{#roomId}}
+        <form action="/tasks/create" method="post" name="task">
+            <p>
+                <label for="task">Задача:</label>
+                <input type="text" min="1" max="30" name="taskName" id="task" required>
+            </p>
+            <p>
+                <label for="period">Период (в днях):</label>
+                <input type="number" min="1" max="14" name="period" id="period" required>
+            </p>
+            <p>
+                <label for="duration">Продолжительность (в минутах):</label>
+                <input type="number" min="1" max="60" name="duration" id="duration" required>
+            </p>
+            <p>
+                <label for="score">Количество очков:</label>
+                <input type="number" min="1" max="10" name="score" id="score" required>
+            </p>
+            <p>
+                <label for="defaultPriority">Приоритет:</label>
+                <input type="number" min="0" max="4" name="defaultPriority" id="defaultPriority" required>
+            </p>
+            <p>
+                <button type="submit" name="roomId" value="{{roomId}}">Создать</button>
+            </p>
+        </form>
+    {{/roomId}}
+
+    {{^roomId}}
+        <p>Для какого адреса команата?</p>
+    {{/roomId}}
+</main>
+
+<footer>{{>elements/footer}}</footer>
+</body>
+</html>

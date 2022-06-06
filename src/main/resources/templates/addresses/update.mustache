@@ -6,16 +6,15 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>addresses/nav}}</nav>
+<nav>{{>nav}}</nav>
 
 <main>
     {{#address}}
-        <form action="/addresses/update" method="post">
+        <form action="/addresses/{{id}}/update" method="post">
             <table>
                 <thead>
                 <tr>
                     <th>Вид значения</th>
-                    <th>ID</th>
                     <th>Адрес</th>
                 </tr>
                 </thead>
@@ -23,16 +22,13 @@
                 <tbody>
                 <tr>
                     <td>Текущее значение</td>
-                    <td>{{id}}</td>
                     <td>{{address}}</td>
                 </tr>
                 <tr>
                     <td>Новое значение</td>
-                    <td><input type="hidden" name="id" value="{{id}}">{{id}}</td>
                     <td><input type="text" name="address"></td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td><button type="submit">Сохранить</button></td>
                     <td><button type="reset">Сбросить</button></td>
                 </tr>
@@ -43,7 +39,7 @@
 
     {{^address}}
         <p>
-            Не указан какой-нибудь адрес!
+            Не указан какой-либо адрес!
         </p>
     {{/address}}
 </main>

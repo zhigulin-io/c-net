@@ -6,10 +6,23 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>rooms/nav}}</nav>
+<nav>{{>nav}}</nav>
 
 <main>
-
+    {{#addressId}}
+        <form action="/rooms/create" method="post">
+            <p>
+                <label for="room">Комната:</label><br>
+                <input type="text" min="1" max="30" name="room" id="room" required>
+            </p>
+            <p>
+                <button type="submit" name="addressId" value="{{addressId}}">Создать</button>
+            </p>
+        </form>
+    {{/addressId}}
+    {{^addressId}}
+        <p>Для какого адреса команата?</p>
+    {{/addressId}}
 </main>
 
 <footer>{{>elements/footer}}</footer>
