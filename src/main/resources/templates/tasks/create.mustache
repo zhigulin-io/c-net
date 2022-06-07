@@ -32,6 +32,10 @@
                 <input type="number" min="1" max="5" name="defaultPriority" id="defaultPriority" required>
             </p>
             <p>
+                <label for="lastCompleted">Дней назад выполнено:</label>
+                <input type="number" min="0" max="14" name="lastCompleted" id="lastCompleted" required>
+            </p>
+            <p>
                 <button type="submit" name="roomId" value="{{roomId}}">Создать</button>
             </p>
         </form>

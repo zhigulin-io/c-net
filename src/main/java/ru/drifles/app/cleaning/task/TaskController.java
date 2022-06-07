@@ -26,9 +26,6 @@ public class TaskController {
     @PostMapping("/create")
     public RedirectView createTask(@ModelAttribute("task") Task task, @RequestParam Long roomId) {
         task.setCurrentPriority(task.getDefaultPriority());
-        task.setLastCompleted(0);
-
-        System.out.println(task);
 
         var actual = taskService.createTask(task, roomId);
         return new RedirectView("/rooms/" + actual.getRoom().getId());

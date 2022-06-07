@@ -4,12 +4,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.drifles.app.cleaning.address.Address;
 import ru.drifles.app.cleaning.address.AddressRepository;
-import ru.drifles.app.cleaning.task.Task;
 import ru.drifles.app.cleaning.task.TaskRepository;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,9 +26,36 @@ public class Scheduler {
         updateSchedules();
     }
 
-    @Scheduled(cron = "@daily")
+    public void updateTaskStatus(Long addressId, Long taskId) {
+        schedules.forEach((address, schedule) -> {
+            if (address.getId().equals(addressId)) {
+                schedule.updateTaskStatus(taskId);
+            }
+        });
+    }
+
+    @Scheduled(cron = "0 * * * * *")
+    @Transactional
     public void updateSchedules() {
-        // TODO: Обновление задач
+        var tasks = taskRepository.findAll();
+        tasks.forEach(task -> {
+            var address = task.getRoom().getAddress();
+            var schedule = schedules.get(address);
+            if (schedule != null) {
+                var status = schedule.getTaskStatusMap().get(task);
+                System.out.println("KURWA: " + status);
+                if (status != null) {
+                    if (status) {
+                        task.setLastCompleted(0);
+                        task.setCurrentPriority(task.getDefaultPriority());
+                    } else {
+                        task.setCurrentPriority(task.getCurrentPriority() + 1);
+                    }
+                }
+            }
+            task.setLastCompleted(task.getLastCompleted() + 1);
+        });
+        taskRepository.saveAll(tasks);
 
         // Очистка расписания
         schedules.clear();
@@ -38,12 +63,12 @@ public class Scheduler {
         // Заполнение новыми тасками
         var addresses = addressRepository.findAll();
         addresses.forEach(address -> {
-            var tasks = taskRepository.findTasksByAddressIdOrderByPriority(address.getId());
-            if (tasks.size() != 0) {
+            var taskList = taskRepository.findTasksByAddressIdOrderByPriority(address.getId());
+            if (taskList.size() != 0) {
                 var schedule = new Schedule();
                 int totalDuration = 0;
 
-                for (var task : tasks)
+                for (var task : taskList)
                     if (totalDuration + task.getDuration() <= 60)
                         schedule.addTask(task);
 
