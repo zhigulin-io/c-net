@@ -7,6 +7,7 @@ import ru.drifles.app.cleaning.address.Address;
 import ru.drifles.app.cleaning.address.AddressRepository;
 import ru.drifles.app.cleaning.room.Room;
 import ru.drifles.app.cleaning.room.RoomRepository;
+import ru.drifles.app.cleaning.task.TaskRepository;
 
 @SpringBootTest
 public class JpaTest {
@@ -16,6 +17,9 @@ public class JpaTest {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Test
     public void shouldAddRoomToExistingAddress() {
@@ -38,6 +42,16 @@ public class JpaTest {
         room.setAddress(addr);
 
         roomRepository.save(room);
+    }
+
+    @Test
+    public void test1() {
+        var tasks = taskRepository.findTasksByAddressIdOrderByPriority(3L);
+        tasks.forEach(task -> {
+            System.out.println(task.getCurrentPriority());
+            System.out.println(task.getRoom().getId());
+            System.out.println(task.getRoom().getAddress().getId());
+        });
     }
 
 }

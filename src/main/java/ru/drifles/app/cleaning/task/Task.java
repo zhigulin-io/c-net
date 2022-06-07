@@ -4,6 +4,7 @@ import ru.drifles.app.cleaning.room.Room;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tasks", schema = "public")
@@ -136,5 +137,25 @@ public class Task implements Serializable {
                 ", currentPriority=" + currentPriority +
                 ", lastCompleted=" + lastCompleted +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id.equals(task.id)
+                && taskName.equals(task.taskName)
+                && period.equals(task.period)
+                && duration.equals(task.duration)
+                && score.equals(task.score)
+                && defaultPriority.equals(task.defaultPriority)
+                && currentPriority.equals(task.currentPriority)
+                && lastCompleted.equals(task.lastCompleted);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, taskName, period, duration, score, defaultPriority, currentPriority, lastCompleted);
     }
 }

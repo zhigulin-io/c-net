@@ -4,6 +4,7 @@ import ru.drifles.app.cleaning.room.Room;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -56,5 +57,26 @@ public class Address {
 
     public void setRooms(Set<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address1 = (Address) o;
+        return id.equals(address1.id) && address.equals(address1.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, address);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
