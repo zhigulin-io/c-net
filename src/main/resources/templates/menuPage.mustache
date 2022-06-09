@@ -6,13 +6,22 @@
 </head>
 <body>
 <header>{{> elements/header}}</header>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+    </div>
+</nav>
+
 
 <main>
 
-    <ul>
-        <li><a href="/goals">Цели</a></li>
-        <li><a href="/addresses">Задачи</a></li>
-    </ul>
+    <div class="creator">
+        <label>Сколько минут в день уделять уборке: </label>
+        <input type="number" class="creator-field"/>
+        <a href="#" class="btn">Сохранить</a>
+    </div>
 
 </main>
 

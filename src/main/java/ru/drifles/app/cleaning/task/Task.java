@@ -40,6 +40,9 @@ public class Task implements Serializable {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
+    @Transient
+    private boolean editable;
+
     public Task() {
     }
 
@@ -123,6 +126,14 @@ public class Task implements Serializable {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
     @Override

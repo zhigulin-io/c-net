@@ -6,17 +6,19 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+    </div>
+</nav>
 
 <main>
-    <form action="/addresses/create" method="post">
-        <p>
-            <label for="address">Адрес:</label><br>
-            <input type="text" name="address" required min="1" max="30">
-        </p>
-        <p>
-            <button type="submit">Создать</button>
-        </p>
+    <form action="/addresses/create" method="post" class="creator">
+        <label for="address">Адрес:</label>
+        <input type="text" name="address" required min="1" max="30" class="creator-field">
+        <button type="submit" class="btn">Создать</button>
     </form>
 </main>
 

@@ -6,8 +6,13 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
-
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+    </div>
+</nav>
 <main>
     {{#goal}}
         <form action="/goals/update" method="post">

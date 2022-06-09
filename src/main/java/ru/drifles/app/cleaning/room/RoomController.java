@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.drifles.app.cleaning.schedule.Scheduler;
 
 import java.util.logging.Logger;
 
@@ -15,15 +16,20 @@ public class RoomController {
     private static final Logger LOG = Logger.getLogger(RoomController.class.getName());
 
     private final RoomService roomService;
+    private final Scheduler scheduler;
 
     @Autowired
-    public RoomController(RoomService roomService) {
+    public RoomController(RoomService roomService, Scheduler scheduler) {
         this.roomService = roomService;
+        this.scheduler = scheduler;
     }
 
     @GetMapping("/{id}")
     public String getRoomDetails(Model model, @PathVariable Long id) {
         var room = roomService.getRoomWithTasks(id);
+        for (var task : room.getTasks()) {
+            task.setEditable(scheduler.isTaskEditable(task));
+        }
         model.addAttribute("room", room);
         return "rooms/details";
     }

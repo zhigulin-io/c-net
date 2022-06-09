@@ -6,36 +6,30 @@
 </head>
 <body>
 <header>{{> elements/header }}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+        <a href="/goals/create" class="btn">Добавить цель</a>
+        <a href="/goals/transaction" class="btn">Транзакция</a>
+    </div>
+</nav>
 
 <main>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Цель</th>
-            <th>Необходимо очков</th>
-            <th>Очков сейчас</th>
-            <th>Достигнута</th>
-            <th>Редактировать</th>
-            <th>Удалить</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        {{# goals }}
-            <tr>
-                <td>{{id}}</td>
-                <td>{{goal}}</td>
-                <td>{{scoreCap}}</td>
-                <td>{{currentScore}}</td>
-                <td>{{status}}</td>
-                <td><a href='/goals/update?id={{id}}'>Редактировать</a></td>
-                <td><a href='/goals/delete?id={{id}}'>Удалить</a></td>
-            </tr>
-        {{/ goals }}
-        </tbody>
-    </table>
+    <div class="card-container">
+        {{#goals}}
+        <div class="card">
+            <a href='/goals/update?id={{id}}' class="btn">{{goal}}</a>
+            <p>{{currentScore}}/{{scoreCap}}</p>
+            <a href='/goals/delete?id={{id}}' class="btn">
+                {{#status}}Выполнить{{/status}}
+                {{^status}}Удалить{{/status}}
+            </a>
+        </div>
+        {{/goals}}
+    </div>
 </main>
 
 <footer>{{> elements/footer }}</footer>

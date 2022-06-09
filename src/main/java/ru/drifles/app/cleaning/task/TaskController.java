@@ -5,16 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.drifles.app.cleaning.schedule.Scheduler;
 
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
+    private final Scheduler scheduler;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, Scheduler scheduler) {
         this.taskService = taskService;
+        this.scheduler = scheduler;
     }
 
     @GetMapping("/create")
@@ -34,20 +37,22 @@ public class TaskController {
     @GetMapping("/{id}/update")
     public String getTaskUpdater(Model model, @PathVariable Long id) {
         var task = taskService.getTaskById(id);
-        model.addAttribute("task", task);
+        if (scheduler.isTaskEditable(task)) {
+            model.addAttribute("task", task);
+        }
         return "tasks/update";
     }
 
-    @PostMapping("/{id}/update")
-    public RedirectView updateTask(@ModelAttribute("task") Task task, @PathVariable Long id) {
-        task.setId(id);
-        var updatedTask = taskService.updateTask(task);
+    @PostMapping("/update")
+    public RedirectView updateTask(@ModelAttribute("task") Task task) {
+        var updatedTask = scheduler.updateTask(task);
         return new RedirectView("/rooms/" + updatedTask.getRoom().getId());
     }
 
     @PostMapping("/{id}/delete")
-    public RedirectView deleteTask(@PathVariable Long id, @RequestParam Long roomId) {
-        taskService.deleteTask(id);
-        return new RedirectView("/rooms/" + roomId);
+    public RedirectView deleteTask(@PathVariable Long id) {
+        var task = taskService.getTaskById(id);
+        scheduler.deleteTask(task);
+        return new RedirectView("/rooms/" + task.getRoom().getId());
     }
 }

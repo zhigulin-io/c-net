@@ -60,11 +60,12 @@ public class GoalController {
     }
 
     @PostMapping(value = "/transaction", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public RedirectView doTransaction(@RequestBody MultiValueMap<String, String> formData) {
+    public RedirectView doTransaction(
+            @RequestParam Long sourceId,
+            @RequestParam Long destinationId,
+            @RequestParam Integer amount
+    ) {
         try {
-            var sourceId = Long.parseLong(formData.get("sourceId").get(0));
-            var destinationId = Long.parseLong(formData.get("destinationId").get(0));
-            var amount = Integer.parseInt(formData.get("amount").get(0));
             goalService.doTransaction(sourceId, destinationId, amount);
         } catch (Throwable th) {
             LOG.severe("Error in TRANSACTION POST method: " + th.getMessage());

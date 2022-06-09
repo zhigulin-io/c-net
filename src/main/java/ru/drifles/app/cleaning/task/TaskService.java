@@ -2,7 +2,10 @@ package ru.drifles.app.cleaning.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.drifles.app.cleaning.address.Address;
 import ru.drifles.app.cleaning.room.Room;
+
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -28,7 +31,7 @@ public class TaskService {
     public Task updateTask(Task newTask) {
         var actual = repository.findById(newTask.getId()).orElseThrow();
 
-        if (newTask.getTaskName() != null)
+        if (newTask.getTaskName() != null && newTask.getTaskName().length() > 0)
             actual.setTaskName(newTask.getTaskName());
 
         if (newTask.getDuration() != null)
@@ -46,7 +49,24 @@ public class TaskService {
         return repository.save(actual);
     }
 
-    public void deleteTask(Long id) {
-        repository.deleteById(id);
+    public void deleteTask(Task task) {
+        repository.delete(task);
+    }
+
+    public void deleteTaskById(Long id) {
+        if (id != null)
+            repository.deleteById(id);
+    }
+
+    public Iterable<Task> getAll() {
+        return repository.findAll();
+    }
+
+    public void saveAll(Iterable<Task> tasks) {
+        repository.saveAll(tasks);
+    }
+
+    public List<Task> getAllForAddressBasedOnPriority(Address address) {
+        return repository.findTasksByAddressIdOrderByPriority(address.getId());
     }
 }

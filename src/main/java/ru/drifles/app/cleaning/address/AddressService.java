@@ -3,7 +3,6 @@ package ru.drifles.app.cleaning.address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.drifles.app.cleaning.room.Room;
 
 @Service
 public class AddressService {
@@ -15,7 +14,7 @@ public class AddressService {
         this.repository = repository;
     }
 
-    public Iterable<Address> getAllAddresses() {
+    public Iterable<Address> getAll() {
         return repository.findAll();
     }
 

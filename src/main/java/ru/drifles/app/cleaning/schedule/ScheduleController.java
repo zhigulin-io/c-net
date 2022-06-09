@@ -5,16 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.drifles.app.cleaning.task.TaskService;
 
 @Controller
 @RequestMapping("/schedule")
 public class ScheduleController {
 
     private final Scheduler scheduler;
+    private final TaskService taskService;
 
     @Autowired
-    public ScheduleController(Scheduler scheduler) {
+    public ScheduleController(Scheduler scheduler, TaskService taskService) {
         this.scheduler = scheduler;
+        this.taskService = taskService;
     }
 
     @GetMapping
@@ -24,9 +27,10 @@ public class ScheduleController {
         return "schedule/list";
     }
 
-    @PostMapping("/{id}")
-    public RedirectView updateTaskStatus(@PathVariable("id") Long taskId, @RequestParam Long addressId) {
-        scheduler.updateTaskStatus(addressId, taskId);
+    @GetMapping("/{id}")
+    public RedirectView updateTaskStatus(@PathVariable("id") Long id) {
+        var task = taskService.getTaskById(id);
+        scheduler.updateTaskStatus(task);
         return new RedirectView("/schedule");
     }
 }

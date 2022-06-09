@@ -24,7 +24,7 @@ public class AddressController {
 
     @GetMapping
     public String getAddressesList(Model model) {
-        var addresses = addressService.getAllAddresses();
+        var addresses = addressService.getAll();
         model.addAttribute("addresses", addresses);
         return "addresses/list";
     }

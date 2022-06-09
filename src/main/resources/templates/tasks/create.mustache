@@ -6,38 +6,36 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+    </div>
+</nav>
 
 <main>
     {{#roomId}}
-        <form action="/tasks/create" method="post" name="task">
-            <p>
-                <label for="task">Задача:</label>
-                <input type="text" min="1" max="30" name="taskName" id="task" required>
-            </p>
-            <p>
-                <label for="period">Период (в днях):</label>
-                <input type="number" min="1" max="14" name="period" id="period" required>
-            </p>
-            <p>
-                <label for="duration">Продолжительность (в минутах):</label>
-                <input type="number" min="1" max="60" name="duration" id="duration" required>
-            </p>
-            <p>
-                <label for="score">Количество очков:</label>
-                <input type="number" min="1" max="10" name="score" id="score" required>
-            </p>
-            <p>
-                <label for="defaultPriority">Приоритет:</label>
-                <input type="number" min="1" max="5" name="defaultPriority" id="defaultPriority" required>
-            </p>
-            <p>
-                <label for="lastCompleted">Дней назад выполнено:</label>
-                <input type="number" min="0" max="14" name="lastCompleted" id="lastCompleted" required>
-            </p>
-            <p>
-                <button type="submit" name="roomId" value="{{roomId}}">Создать</button>
-            </p>
+        <form action="/tasks/create" method="post" name="task" class="creator">
+            <label for="task">Задача:</label>
+            <input type="text" min="1" max="30" name="taskName" id="task" required class="creator-field">
+
+            <label for="period">Период (в днях):</label>
+            <input type="number" min="1" max="14" name="period" id="period" required class="creator-field">
+
+            <label for="duration">Продолжительность (в минутах):</label>
+            <input type="number" min="1" max="60" name="duration" id="duration" required class="creator-field">
+
+            <label for="score">Количество очков:</label>
+            <input type="number" min="1" max="10" name="score" id="score" required class="creator-field">
+
+            <label for="defaultPriority">Приоритет:</label>
+            <input type="number" min="1" max="5" name="defaultPriority" id="defaultPriority" required class="creator-field">
+
+            <label for="lastCompleted">Дней назад выполнено:</label>
+            <input type="number" min="0" max="14" name="lastCompleted" id="lastCompleted" required class="creator-field">
+
+            <button type="submit" name="roomId" value="{{roomId}}" class="btn">Создать</button>
         </form>
     {{/roomId}}
 

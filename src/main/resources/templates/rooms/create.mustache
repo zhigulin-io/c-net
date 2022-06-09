@@ -6,22 +6,25 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+    </div>
+</nav>
 
 <main>
     {{#addressId}}
-        <form action="/rooms/create" method="post">
-            <p>
-                <label for="room">Комната:</label><br>
-                <input type="text" min="1" max="30" name="room" id="room" required>
-            </p>
-            <p>
-                <button type="submit" name="addressId" value="{{addressId}}">Создать</button>
-            </p>
-        </form>
+    <form action="/rooms/create" method="post" class="creator">
+        <label for="room">Комната:</label>
+        <input type="text" min="1" max="30" name="room" id="room" required class="creator-field">
+        <button type="submit" name="addressId" value="{{addressId}}" class="btn">Создать</button>
+    </form>
     {{/addressId}}
+
     {{^addressId}}
-        <p>Для какого адреса команата?</p>
+    <p>Для какого адреса команата?</p>
     {{/addressId}}
 </main>
 

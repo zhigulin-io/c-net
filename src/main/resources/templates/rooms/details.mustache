@@ -6,7 +6,13 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+    </div>
+</nav>
 
 <main>
     {{#room}}
@@ -31,12 +37,14 @@
                     <li>Дней назад выполнено: {{lastCompleted}}</li>
                 </ul>
 
-                <form action="/tasks/{{id}}/update" method="get">
-                    <button type="submit">Изменить</button>
-                </form>
-                <form action="/tasks/{{id}}/delete" method="post">
-                    <button type="submit" name="roomId" value="{{#room}}{{id}}{{/room}}">Удалить</button>
-                </form>
+                {{#editable}}
+                    <form action="/tasks/{{id}}/update" method="get">
+                        <button type="submit">Изменить</button>
+                    </form>
+                    <form action="/tasks/{{id}}/delete" method="post">
+                        <button type="submit">Удалить</button>
+                    </form>
+                {{/editable}}
             </div>
         {{/tasks}}
     {{/room}}

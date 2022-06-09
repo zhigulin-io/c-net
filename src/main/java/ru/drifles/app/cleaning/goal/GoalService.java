@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,12 @@ public class GoalService {
         if (source.currentScore() >= amount && amount + destination.currentScore() <= destination.scoreCap()) {
             source.setCurrentScore(source.currentScore() - amount);
             destination.setCurrentScore(destination.currentScore() + amount);
+
+            if (destination.currentScore() >= destination.scoreCap())
+                destination.setStatus(true);
+            if (source.currentScore() < source.scoreCap())
+                source.setStatus(false);
+
             repository.saveAll(List.of(source, destination));
         }
     }
@@ -62,11 +69,9 @@ public class GoalService {
         repository.deleteById(id);
     }
 
-    public void addScore(Long id, Integer score) {
-        var entity = repository.findById(id).orElseThrow();
-        if (entity.currentScore() + score <= entity.scoreCap()) {
-            entity.setCurrentScore(entity.currentScore() + score);
-        }
-        repository.save(entity);
+    public void addScore(Integer score) {
+        var goal = getPrimaryGoal();
+        goal.setCurrentScore(goal.currentScore() + score);
+        repository.save(goal);
     }
 }

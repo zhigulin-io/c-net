@@ -6,45 +6,29 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+</nav>
 
 <main>
+    <div class="card-container">
     {{#schedules}}
-        <div>
-            <p>Адрес: {{#key}}{{address}}{{/key}}</p>
-            <table>
-                <thead>
-                <tr>
-                    <th>Задача</th>
-                    <th>Время, мин</th>
-                    <th>Приоритет</th>
-                    <th>Статус</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#value}} {{#taskStatusMap}} {{#entrySet}} 
-                    
-                    <tr>
-                        <td>{{#key}} {{taskName}} {{/key}}</td>
-                        <td>{{#key}} {{duration}} {{/key}}</td>
-                        <td>{{#key}} {{currentPriority}} {{/key}}</td>
-                        <td><input type="checkbox" {{#value}}checked{{/value}} disabled></td>
-                        <td>
-                            <form action="/schedule/{{#key}} {{id}} {{/key}}" method="post">
-                                <button name="addressId"
-                                        value="{{#key}} {{#room}} {{#address}} {{id}} {{/address}} {{/room}} {{/key}}">
-                                    Изменить статус
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    
-                {{/entrySet}} {{/taskStatusMap}} {{/value}}
-                </tbody>
+        <div class="card">
+            <h3>{{#key}}{{address}}{{/key}}</h3>
+            
+            {{#value}} {{#taskStatusMap}} {{#entrySet}}
+            <p>
+                <a href="/schedule/{{#key}}{{id}}{{/key}}" {{#value}}class="done"{{/value}}>
+                    {{#key}} {{taskName}} ({{#room}}{{room}}{{/room}}, {{duration}} мин.) {{/key}}
+                </a> 
+            </p>
+            {{/entrySet}} {{/taskStatusMap}} {{/value}}
 
-            </table>
         </div>
     {{/schedules}}
+    </div>
 </main>
 
 <footer>{{>elements/footer}}</footer>

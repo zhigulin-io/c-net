@@ -6,26 +6,27 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+        <a href="/addresses/create" class="btn">Добавить адрес</a>
+    </div>
+</nav>
 
 <main>
-    <form action="/addresses/create" method="get">
-        <button type="submit">Добавить адрес</button>
-    </form>
 
+    <div class="card-container">
     {{#addresses}}
-        <div style="margin: 1em;">
-            <form action="/addresses/{{id}}" method="get">
-                <button type="submit">{{address}}</button>
-            </form>
-            <form action="/addresses/{{id}}/update" method="get">
-                <button type="submit">Изменить</button>
-            </form>
-            <form action="/addresses/{{id}}/delete" method="post">
-                <button type="submit">Удалить</button>
-            </form>
+        <div class="card">
+            <a href="/addresses/{{id}}" class="btn">{{address}}</a>
+            <a href="/addresses/{{id}}/update" class="btn">Изменить</a>
+            <a href="/addresses/{{id}}/delete" class="btn">Удалить</a>
         </div>
     {{/addresses}}
+    </div>
+
 </main>
 
 <footer>{{>elements/footer}}</footer>

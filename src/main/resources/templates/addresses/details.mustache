@@ -6,30 +6,29 @@
 </head>
 <body>
 <header>{{>elements/header}}</header>
-<nav>{{>nav}}</nav>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+        <a href="/rooms/create?addressId={{id}}" class="btn">Добавить комнату</a>
+    </div>
+</nav>
 
 <main>
     {{#address}}
-        <p>
-            {{address}}
-        </p>
-        <form action="/rooms/create" method="get">
-            <button type="submit" name="addressId" value="{{id}}">Добавить комнату</button>
-        </form>
-
+    <div class="card-container">
         {{#rooms}}
-            <div style="margin: 1em;">
-                <form action="/rooms/{{id}}" method="get">
-                    <button type="submit">{{room}}</button>
-                </form>
-                <form action="/rooms/{{id}}/update" method="get">
-                    <button type="submit">Изменить</button>
-                </form>
+            <div class="card">
+                <h3>{{#address}}{{address}}{{/address}}</h3>
+                <a href="/rooms/{{id}}" class="btn">{{room}}</a>
+                <a href="/rooms/{{id}}/update" class="btn">Изменить</a>
                 <form action="/rooms/{{id}}/delete" method="post">
-                    <button type="submit" name="addressId" value="{{#address}}{{id}}{{/address}}">Удалить</button>
+                    <button type="submit" name="addressId" value="{{#address}}{{id}}{{/address}}" class="btn">Удалить</button>
                 </form>
             </div>
         {{/rooms}}
+    </div>
     {{/address}}
 
     {{^address}}
