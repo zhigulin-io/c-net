@@ -40,8 +40,10 @@ public class TaskService {
         if (newTask.getPeriod() != null)
             actual.setPeriod(newTask.getPeriod());
 
-        if (newTask.getDefaultPriority() != null)
+        if (newTask.getDefaultPriority() != null) {
+            actual.setCurrentPriority(newTask.getDefaultPriority());
             actual.setDefaultPriority(newTask.getDefaultPriority());
+        }
 
         if (newTask.getScore() != null)
             actual.setScore(newTask.getScore());

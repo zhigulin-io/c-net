@@ -76,7 +76,7 @@ public class AddressController {
         return new RedirectView("/addresses");
     }
 
-    @PostMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public RedirectView deleteAddress(@PathVariable Long id) {
         try {
             addressService.deleteAddressById(id);

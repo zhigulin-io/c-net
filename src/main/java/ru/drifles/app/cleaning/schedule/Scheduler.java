@@ -61,7 +61,7 @@ public class Scheduler {
         return !schedule.containsTask(task) || schedule.getMarkedNumber() == 0;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     @Transactional
     public void updateSchedules() {
         updateTasks();
