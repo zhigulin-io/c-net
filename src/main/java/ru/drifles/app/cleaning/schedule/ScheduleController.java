@@ -1,6 +1,5 @@
 package ru.drifles.app.cleaning.schedule;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ public class ScheduleController {
     private final Scheduler scheduler;
     private final TaskService taskService;
 
-    @Autowired
     public ScheduleController(Scheduler scheduler, TaskService taskService) {
         this.scheduler = scheduler;
         this.taskService = taskService;
@@ -32,5 +30,11 @@ public class ScheduleController {
         var task = taskService.getTaskById(id);
         scheduler.updateTaskStatus(task);
         return new RedirectView("/schedule");
+    }
+
+    @PostMapping("/timeCap")
+    public RedirectView setTimeCap(@RequestParam(name = "timeCap") Integer timeCap) {
+        scheduler.setTimeCap(timeCap);
+        return new RedirectView("/");
     }
 }

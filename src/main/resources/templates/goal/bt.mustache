@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {{> elements/meta }}
+    <title>Список целей</title>
+</head>
+<body>
+<header>{{> elements/header }}</header>
+<nav>
+    <div class="menu">
+        {{>nav}}
+    </div>
+    <div class="menu">
+        <a href="/goals/create" class="btn">Добавить цель</a>
+        <a href="/goals/transaction" class="btn">Транзакция</a>
+    </div>
+</nav>
+
+<main>
+    <h3>Ошибка тразакции</h3>
+    <a href="/goals" class="btn">OK</a>
+</main>
+
+<footer>{{> elements/footer }}</footer>
+</body>
+</html>

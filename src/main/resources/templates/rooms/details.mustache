@@ -17,10 +17,10 @@
 <main>
     {{#room}}
         {{#address}}
-            <p>{{address}}</p>
+            <h3>Адрес: {{address}}</h3>
         {{/address}}
 
-        <p>{{room}}</p>
+        <h3>Комната: {{room}}</h3>
 
         <form action="/tasks/create" method="get">
             <button type="submit" name="roomId" value="{{id}}">Добавить задачу</button>

@@ -17,8 +17,13 @@
 </nav>
 
 <main>
-
     <div class="card-container">
+        {{#primaryGoal}}
+        <div class="card">
+            <a href='#' class="btn">{{goal}}</a>
+            <p>{{currentScore}}</p>
+        </div>
+        {{/primaryGoal}}
         {{#goals}}
         <div class="card">
             <a href='/goals/update?id={{id}}' class="btn">{{goal}}</a>

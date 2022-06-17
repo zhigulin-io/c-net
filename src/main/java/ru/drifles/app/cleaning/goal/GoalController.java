@@ -1,6 +1,5 @@
 package ru.drifles.app.cleaning.goal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +16,14 @@ public class GoalController {
 
     private final GoalService goalService;
 
-    @Autowired
     public GoalController(GoalService goalService) {
         this.goalService = goalService;
     }
 
     @GetMapping
     public String getGoalsPage(Model model) {
-        model.addAttribute("goals", goalService.getAllGoals());
+        model.addAttribute("primaryGoal", goalService.getPrimaryGoal());
+        model.addAttribute("goals", goalService.getAllGoalsExcludePrimary());
         return "goal/list";
     }
 
@@ -66,11 +65,21 @@ public class GoalController {
             @RequestParam Integer amount
     ) {
         try {
-            goalService.doTransaction(sourceId, destinationId, amount);
+            var succeed = goalService.doTransaction(sourceId, destinationId, amount);
+
+            if (!succeed) {
+                return new RedirectView("/goals/badTransaction");
+            }
+
         } catch (Throwable th) {
             LOG.severe("Error in TRANSACTION POST method: " + th.getMessage());
         }
         return new RedirectView("/goals");
+    }
+
+    @GetMapping("/badTransaction")
+    public String getTransactionErrorPage() {
+        return "goal/bt";
     }
 
     @GetMapping("/create")

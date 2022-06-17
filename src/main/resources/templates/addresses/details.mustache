@@ -17,10 +17,11 @@
 
 <main>
     {{#address}}
+    <h3>Адрес: {{#address}}{{address}}{{/address}}</h3>
     <div class="card-container">
         {{#rooms}}
             <div class="card">
-                <h3>{{#address}}{{address}}{{/address}}</h3>
+                
                 <a href="/rooms/{{id}}" class="btn">{{room}}</a>
                 <a href="/rooms/{{id}}/update" class="btn">Изменить</a>
                 <form action="/rooms/{{id}}/delete" method="post">

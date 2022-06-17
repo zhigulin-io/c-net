@@ -16,21 +16,21 @@
 
 <main>
     <form action="/goals/transaction" method="post" class="creator">
-        <label for="source">Цель-источник:</label>
+        <label for="source">Откуда:</label>
         <select name="sourceId" id="source" class="creator-field">
         {{#goals}}
-            <option value="{{id}}">{{goal}}({{currentScore}}/{{scoreCap}})</option>
+            <option value="{{id}}">{{goal}} ({{currentScore}})</option>
         {{/goals}}
         </select>
         
-        <label for="destination">Цель-приемник:</label>
+        <label for="destination">Куда:</label>
         <select name="destinationId" id="destination" class="creator-field">
         {{#goals}}{{^status}}
-            <option value="{{id}}">{{goal}}({{currentScore}}/{{scoreCap}})</option>
+            <option value="{{id}}">{{goal}} ({{currentScore}})</option>
         {{/status}}{{/goals}}
         </select>
 
-        <label for="amount">Количество:</label>
+        <label for="amount">Количество очков:</label>
         <input type="number" min="1" name="amount" class="creator-field">
         <button type="submit" class="btn">Перевести</button>
     </form>

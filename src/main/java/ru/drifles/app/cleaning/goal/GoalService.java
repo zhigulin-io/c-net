@@ -1,10 +1,8 @@
 package ru.drifles.app.cleaning.goal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -13,7 +11,6 @@ public class GoalService {
 
     private final GoalRepository repository;
 
-    @Autowired
     public GoalService(GoalRepository repository) {
         this.repository = repository;
     }
@@ -29,6 +26,10 @@ public class GoalService {
         return repository.findAll();
     }
 
+    public Iterable<Goal> getAllGoalsExcludePrimary() {
+        return repository.findAllExcludePrimary();
+    }
+    
     public Optional<Goal> getGoalById(Long id) {
         return repository.findById(id);
     }
@@ -40,7 +41,11 @@ public class GoalService {
         repository.save(entity);
     }
 
-    public void doTransaction(Long sourceId, Long destinationId, Integer amount) {
+    public boolean doTransaction(Long sourceId, Long destinationId, Integer amount) {
+        if (sourceId.equals(destinationId)) {
+            return false;
+        }
+
         var source = repository.findById(sourceId).orElseThrow();
         var destination = repository.findById(destinationId).orElseThrow();
 
@@ -54,7 +59,10 @@ public class GoalService {
                 source.setStatus(false);
 
             repository.saveAll(List.of(source, destination));
+            return true;
         }
+        
+        return false;
     }
 
     public Goal createGoal(String goal, Integer scoreCap) {

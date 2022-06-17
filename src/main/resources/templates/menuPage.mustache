@@ -19,8 +19,10 @@
 
     <div class="creator">
         <label>Сколько минут в день уделять уборке: </label>
-        <input type="number" class="creator-field"/>
-        <a href="#" class="btn">Сохранить</a>
+        <form action="/schedule/timeCap" method="post">
+            <input type="number" min="10" max="60" name="timeCap" class="creator-field"/>
+            <button type="submit" class="btn">Сохранить</button>
+        </form>
     </div>
 
 </main>

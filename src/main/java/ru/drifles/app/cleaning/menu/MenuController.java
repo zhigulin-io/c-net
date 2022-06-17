@@ -1,6 +1,5 @@
 package ru.drifles.app.cleaning.menu;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ public class MenuController {
 
     private final GoalService goalService;
 
-    @Autowired
     public MenuController(GoalService goalService) {
         this.goalService = goalService;
     }

@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class Scheduler {
 
-    private static int minutesPerDay = 20;
+    private int minutesPerDay = 20;
 
     private final TaskService taskService;
     private final AddressService addressService;
@@ -61,7 +61,7 @@ public class Scheduler {
         return !schedule.containsTask(task) || schedule.getMarkedNumber() == 0;
     }
 
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     @Transactional
     public void updateSchedules() {
         updateTasks();
@@ -71,6 +71,12 @@ public class Scheduler {
 
     public Map<Address, Schedule> getSchedules() {
         return schedules;
+    }
+
+    public void setTimeCap(int timeCap) {
+        minutesPerDay = timeCap;
+        schedules.clear();
+        addressService.getAll().forEach(this::recreateSchedule);
     }
 
     private void updateTasks() {
@@ -107,10 +113,13 @@ public class Scheduler {
             var schedule = new Schedule();
             int totalDuration = 0;
 
-            for (var task : taskList)
-                if (totalDuration + task.getDuration() <= minutesPerDay)
+            for (var task : taskList) {
+                if (totalDuration + task.getDuration() <= minutesPerDay) {
                     schedule.addTask(task);
-
+                    totalDuration += task.getDuration();
+                }
+            }
+            
             schedules.put(address, schedule);
         }
     }
