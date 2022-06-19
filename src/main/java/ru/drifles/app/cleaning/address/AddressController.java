@@ -1,10 +1,8 @@
 package ru.drifles.app.cleaning.address;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -17,7 +15,6 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @Autowired
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
